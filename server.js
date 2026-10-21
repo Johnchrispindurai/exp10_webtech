@@ -1,14 +1,13 @@
 
 const http = require("http");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const stories = [
     {
         category: "TECHNOLOGY",
         title: "The next big shift in technology is already taking shape",
-        description:
-            "From artificial intelligence to everyday digital tools, a new wave of innovation is changing how people work and live.",
+        description: "From artificial intelligence to everyday digital tools, a new wave of innovation is changing how people work and live.",
         author: "News Desk",
         time: "6 min read",
         image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1100&q=85"
@@ -16,8 +15,7 @@ const stories = [
     {
         category: "SPORTS",
         title: "Beyond the scoreboard: the moments that make sport special",
-        description:
-            "The stories of teamwork, determination and the people behind the game.",
+        description: "The stories of teamwork, determination and the people behind the game.",
         author: "Sports Desk",
         time: "4 min read",
         image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80"
@@ -25,8 +23,7 @@ const stories = [
     {
         category: "BUSINESS",
         title: "Small businesses find new ways to reach a digital audience",
-        description:
-            "Online platforms are opening up fresh opportunities for independent businesses and local entrepreneurs.",
+        description: "Online platforms are opening up fresh opportunities for independent businesses and local entrepreneurs.",
         author: "Business Desk",
         time: "5 min read",
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
@@ -34,8 +31,7 @@ const stories = [
     {
         category: "EDUCATION",
         title: "How new learning tools are changing the classroom",
-        description:
-            "Students and teachers are exploring different ways to make learning more practical and accessible.",
+        description: "Students and teachers are exploring different ways to make learning more practical and accessible.",
         author: "Education Desk",
         time: "3 min read",
         image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80"
@@ -46,8 +42,7 @@ function articleCard(story, featured = false) {
     return `
         <article class="story ${featured ? "featured" : ""}">
             <a class="story-image" href="/article">
-                <img src="${story.image}" alt="${story.category} news"
-                     loading="lazy">
+                <img src="${story.image}" alt="${story.category} news" loading="lazy">
             </a>
             <div class="story-content">
                 <span class="category">${story.category}</span>
@@ -70,24 +65,19 @@ function header(activePage) {
         </div>
 
         <header class="masthead">
-            <a class="brand" href="/home">
-                DAILY<span>POST</span><i>.</i>
-            </a>
+            <a class="brand" href="/home">DAILY<span>POST</span><i>.</i></a>
             <p>Stories that matter. News that moves you.</p>
         </header>
 
         <nav class="navbar">
             <div class="nav-inner">
-                <a class="${activePage === "home" ? "active" : ""}"
-                   href="/home">Home</a>
+                <a class="${activePage === "home" ? "active" : ""}" href="/home">Home</a>
                 <a href="/home#latest">Latest News</a>
                 <a href="/home#technology">Technology</a>
                 <a href="/home#sports">Sports</a>
                 <a href="/home#business">Business</a>
-                <a class="${activePage === "about" ? "active" : ""}"
-                   href="/about">About</a>
-                <a class="${activePage === "contact" ? "active" : ""}"
-                   href="/contact">Contact</a>
+                <a class="${activePage === "about" ? "active" : ""}" href="/about">About</a>
+                <a class="${activePage === "contact" ? "active" : ""}" href="/contact">Contact</a>
             </div>
         </nav>
 
@@ -112,9 +102,8 @@ function homePage() {
             <section class="lead-grid">
                 <article class="lead-story">
                     <a href="/article" class="lead-image">
-                        <img
-                            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=85"
-                            alt="A modern workspace filled with natural light">
+                        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=85"
+                             alt="A modern workspace">
                     </a>
                     <div class="lead-copy">
                         <span class="category">THE BIG READ</span>
@@ -124,9 +113,7 @@ function homePage() {
                             the way we live. Start with the stories behind
                             the headlines.
                         </p>
-                        <a class="read-link" href="/article">
-                            Read the story <span>↗</span>
-                        </a>
+                        <a class="read-link" href="/article">Read the story ↗</a>
                     </div>
                 </article>
 
@@ -142,9 +129,7 @@ function homePage() {
                             </span>
                         </a>
                     `).join("")}
-                    <p class="editor-note">
-                        A few good stories to get your day started.
-                    </p>
+                    <p class="editor-note">A few good stories to get your day started.</p>
                 </aside>
             </section>
 
@@ -158,10 +143,7 @@ function homePage() {
                 </div>
 
                 <div class="story-grid">
-                    ${articleCard(stories[0])}
-                    ${articleCard(stories[1])}
-                    ${articleCard(stories[2])}
-                    ${articleCard(stories[3])}
+                    ${stories.map(story => articleCard(story)).join("")}
                 </div>
             </section>
 
@@ -169,10 +151,7 @@ function homePage() {
                 <div>
                     <span class="eyebrow">A BETTER WAY TO CATCH UP</span>
                     <h2>Good stories. No unnecessary noise.</h2>
-                    <p>
-                        DAILYPOST brings together perspectives on the
-                        subjects worth paying attention to.
-                    </p>
+                    <p>DAILYPOST brings together perspectives on the subjects worth paying attention to.</p>
                 </div>
                 <a class="button-link" href="/about">Meet our newsroom ↗</a>
             </section>
@@ -193,9 +172,8 @@ function articlePage() {
             <img class="article-hero"
                  src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=85"
                  alt="A modern workspace">
-            <p class="article-caption">
-                A closer look at the ideas shaping everyday life.
-            </p>
+            <p class="article-caption">A closer look at the ideas shaping everyday life.</p>
+
             <div class="article-body">
                 <p>
                     The world is always changing, but understanding those
@@ -241,16 +219,14 @@ function aboutPage() {
                 <span>02</span>
                 <div>
                     <h2>Different perspectives</h2>
-                    <p>Our sample newsroom covers technology, sports,
-                       business and education.</p>
+                    <p>Our sample newsroom covers technology, sports, business and education.</p>
                 </div>
             </div>
             <div class="about-band">
                 <span>03</span>
                 <div>
                     <h2>Made for readers</h2>
-                    <p>A straightforward layout helps readers find their
-                       way around the site.</p>
+                    <p>A straightforward layout helps readers find their way around the site.</p>
                 </div>
             </div>
 
@@ -276,14 +252,10 @@ function contactPage() {
             <div class="contact-card">
                 <span class="eyebrow">THE NEWSROOM</span>
                 <h2>DAILYPOST Editorial Team</h2>
-                <p>
-                    This student project demonstrates a contact page
-                    for an online news portal.
-                </p>
+                <p>This student project demonstrates a contact page for an online news portal.</p>
                 <p><strong>Email:</strong> news@dailypost.example</p>
                 <p class="demo-note">
-                    The example email address is a placeholder, not a
-                    monitored contact address.
+                    The example email address is a placeholder, not a monitored contact address.
                 </p>
                 <a class="read-link" href="/home">Back to the homepage ↗</a>
             </div>
@@ -309,9 +281,9 @@ function layout(content, activePage) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta name="description"
-                  content="DAILYPOST online news portal demonstration">
+            <meta name="description" content="DAILYPOST online news portal demonstration">
             <title>DAILYPOST — Stories that matter</title>
+
             <style>
                 :root {
                     --ink: #202526;
@@ -324,7 +296,6 @@ function layout(content, activePage) {
                 }
 
                 * { box-sizing: border-box; }
-
                 html { scroll-behavior: smooth; }
 
                 body {
@@ -335,10 +306,7 @@ function layout(content, activePage) {
                     line-height: 1.65;
                 }
 
-                a {
-                    color: inherit;
-                    text-decoration: none;
-                }
+                a { color: inherit; text-decoration: none; }
 
                 img {
                     display: block;
@@ -370,8 +338,7 @@ function layout(content, activePage) {
                     line-height: 1.2;
                 }
 
-                .brand span { color: var(--red); }
-                .brand i { color: var(--red); }
+                .brand span, .brand i { color: var(--red); }
 
                 .masthead p {
                     margin: 5px 0 0;
@@ -384,7 +351,6 @@ function layout(content, activePage) {
                 .navbar {
                     border-top: 1px solid var(--line);
                     border-bottom: 1px solid var(--line);
-                    background: var(--paper);
                 }
 
                 .nav-inner {
@@ -402,9 +368,7 @@ function layout(content, activePage) {
                 }
 
                 .nav-inner a:hover,
-                .nav-inner a.active {
-                    color: var(--red);
-                }
+                .nav-inner a.active { color: var(--red); }
 
                 .breaking {
                     display: flex;
@@ -482,9 +446,7 @@ function layout(content, activePage) {
                 }
 
                 .lead-image:hover img,
-                .story-image:hover img {
-                    transform: scale(1.035);
-                }
+                .story-image:hover img { transform: scale(1.035); }
 
                 .lead-copy { padding: 21px 0 0; }
 
@@ -513,8 +475,6 @@ function layout(content, activePage) {
                     font-size: 12px;
                     font-weight: 800;
                 }
-
-                .read-link span { font-size: 18px; }
 
                 .editors-picks {
                     padding-left: 25px;
@@ -756,7 +716,6 @@ function layout(content, activePage) {
                 }
 
                 .contact-card h2 { margin-top: 10px; }
-
                 .contact-card p { margin-bottom: 15px; }
 
                 .demo-note {
@@ -810,9 +769,7 @@ function layout(content, activePage) {
 
                 @media (max-width: 760px) {
                     .nav-inner { gap: 12px 20px; }
-
                     .lead-grid { grid-template-columns: 1fr; }
-
                     .lead-image img { height: 270px; }
 
                     .editors-picks {
@@ -833,7 +790,6 @@ function layout(content, activePage) {
 
                 @media (max-width: 480px) {
                     .topline { font-size: 8px; }
-
                     main { width: 91%; margin-top: 25px; }
 
                     .story {
@@ -842,14 +798,15 @@ function layout(content, activePage) {
                     }
 
                     .story-image { height: 120px; }
-
                     .story h3 { font-size: 16px; }
-
                     .description { font-size: 10px; }
-
                     .brand { letter-spacing: -2px; }
 
-                    .breaking { align-items: flex-start; flex-direction: column; gap: 3px; }
+                    .breaking {
+                        align-items: flex-start;
+                        flex-direction: column;
+                        gap: 3px;
+                    }
 
                     .footer-inner {
                         align-items: flex-start;
@@ -858,6 +815,7 @@ function layout(content, activePage) {
                 }
             </style>
         </head>
+
         <body>
             ${header(activePage)}
             ${content}
@@ -911,6 +869,6 @@ const server = http.createServer((req, res) => {
     res.end(layout(content, activePage));
 });
 
-server.listen(PORT, () => {
-    console.log(`DAILYPOST is running at http://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+    console.log(`DAILYPOST is running on port ${PORT}`);
 });
