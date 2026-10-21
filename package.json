@@ -1,0 +1,10 @@
+
+{
+  "name": "dailypost-news-portal",
+  "version": "1.0.0",
+  "description": "DAILYPOST Online News Portal using Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
